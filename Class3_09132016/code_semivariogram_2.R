@@ -1,9 +1,20 @@
-library(lattice)
 library(sp)
 data(meuse)
+?data(meuse)
+data(package="sp")
+
 summary(meuse)
 names(meuse)
+histogran(meuse$zinc)
+shapiro.test(meuse$zinc)
+
+logzinc <- log(meuse$zinc)
+shapiro.test(logzinc)
+
+class(meuse)
 coordinates(meuse) <- ~x+y
+class(meuse)
+
 spplot(meuse, "zinc")
 bubble(meuse, "zinc")
 hscat(log(zinc)~1, meuse, c(0, 80, 120, 250, 500, 1000))
