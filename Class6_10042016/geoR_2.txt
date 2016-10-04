@@ -1,0 +1,23 @@
+#1. visual fitting
+
+library(geoR)
+data(camg)
+class(camg)
+ca <- as.geodata(camg,data.col=5)
+summary(ca)
+plot(ca)
+points(ca)
+
+var1 <- variog(ca,uvec=seq(0,700,by=50)) # var1 <- variog(ca, max.dist=700)
+plot(var1,type="b")
+
+v.eye <- eyefit(var1)
+v.eye
+
+v1.fit <- likfit(ca,ini=c(30,200),,nugget=18, cov.model="exponential")
+
+#anistrophy
+
+v2.fit <- likfit(ca,ini=c(30,200),,nugget=18, cov.model="exponential", fix.psiA=FALSE, psiA=0.5, fix.psiR=FALSE, psiR=1.5)
+
+summary(v2.fit)
