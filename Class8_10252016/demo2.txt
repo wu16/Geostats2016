@@ -1,0 +1,94 @@
+all <- read.csv("F:/Wu/Geostat2016Fall/Class8_11042013/barn.csv", header=TRUE)
+library(gstat)
+library(sp)
+coordinates(all) <- ~ East+North
+#bubble(all, "pH")
+#spplot(all,"pH")
+var1 <- variogram(pH ~ 1, all)
+plot(var1)
+vgm1 <- vgm(0.35, "Exp", 2, 0.05)
+var1.fit1 <- fit.variogram(var1, vgm1)
+data.grid <- expand.grid(x=seq(8.5,8.5,0), y=seq(10.5,10.5,0))
+names(data.grid) <- c("X", "Y")
+coordinates(data.grid) <- ~X+Y
+krig1 <- krige(pH ~ 1, all, data.grid, model=var1.fit1)
+sink("F:/Wu/Geostat2016Fall/Class8_11042013/new/weight1.txt")
+krig1 <- krige(pH ~ 1, all, data.grid, model=var1.fit1, debug.level=32)
+sink()
+var1.fit1
+
+
+vgm2 <- vgm(0.2919076, "Exp", 2.531553, 0.1)
+vgm3 <- vgm(0.0919076, "Exp", 2.531553, 0.3)
+vgm4 <- vgm(0.0, "Exp", 2.531553, 0.3919076)
+
+sink("F:/Wu/Geostat2013/Class8_11042013/weight2.txt")
+krig2 <- krige(pH ~ 1, all, data.grid, model=vgm2, debug.level=32)
+sink()
+sink("F:/Wu/Geostat2013/Class8_11042013/weight3.txt")
+krig3 <- krige(pH ~ 1, all, data.grid, model=vgm3, debug.level=32)
+sink()
+sink("F:/Wu/Geostat2013/Class8_11042013/weight4.txt")
+krig4 <- krige(pH ~ 1, all, data.grid, model=vgm4, debug.level=32)
+sink()
+
+vgm5 <- vgm(0.3919076,"Exp",1.643135,0)
+sink("F:/Wu/Geostat2013/Class8_11042013/weight5.txt")
+krig5 <- krige(pH ~ 1, all, data.grid, model=vgm5, debug.level=32)
+sink()
+
+vgm6 <- vgm(0.3919076, "Exp", 1.2, 0)
+sink("F:/Wu/Geostat2013/Class8_11042013/weight6.txt")
+krig6 <- krige(pH ~ 1, all, data.grid, model=vgm6, debug.level=32)
+sink()
+
+
+vgm7 <- vgm(0.3919076,"Exp",0.2,0)
+sink("F:/Wu/Geostat2013/Class8_11042013/weight7.txt")
+krig7 <- krige(pH ~ 1, all, data.grid, model=vgm7, debug.level=32)
+sink()
+
+
+
+vgm8 <- vgm(0.4919076, "Exp", 2.531553, 0)
+sink("F:/Wu/Geostat2013/Class8_11042013/weight8.txt")
+krig8 <- krige(pH ~ 1, all, data.grid, model=vgm8, debug.level=32)
+sink()
+
+vgm9 <- vgm(0.1919076,"Exp",2.531553,0)
+sink("F:/Wu/Geostat2013/Class8_11042013/weight9.txt")
+krig9 <- krige(pH ~ 1, all, data.grid, model=vgm9, debug.level=32)
+sink()
+
+
+v.dir <- variogram(pH ~ 1, all, alpha=(0:3)*45)
+vgm10 <- vgm(0.3919076, "Exp", 2.531553, 0, anis=c(45,0.3))
+plot(v.dir,vgm9)
+sink("F:/Wu/Geostat2013/Class8_11042013/weight10.txt")
+krig10 <- krige(pH ~ 1, all, data.grid, model=vgm10, debug.level=32)
+sink()
+
+vgm11 <- vgm(0.3919076, "Exp", 2.531553, 0, anis=c(45,0.8))
+plot(v.dir,vgm9)
+sink("F:/Wu/Geostat2013/Class8_11042013/weight11.txt")
+krig11 <- krige(pH ~ 1, all, data.grid, model=vgm11, debug.level=32)
+sink()
+
+
+
+
+#spherical model
+vgm12 <- vgm(0.33863637,"Sph",7.594659,0.01649868)
+sink("F:/Wu/Geostat2013/Class8_11042013/weight12.txt")
+krig12 <- krige(pH ~ 1, all, data.grid, model=vgm12, debug.level=32)
+sink()
+
+vgm13 <- vgm(0.33863637,"Sph",4.929406,0.01649868)
+sink("F:/Wu/Geostat2013/Class8_11042013/weight13.txt")
+krig13 <- krige(pH ~ 1, all, data.grid, model=vgm13, debug.level=32)
+sink()
+
+vgm14 <- vgm(0.33863637,"Sph",0.6,0.01649868)
+sink("F:/Wu/Geostat2013/Class8_11042013/weight14.txt")
+krig14 <- krige(pH ~ 1, all, data.grid, model=vgm14, debug.level=32)
+sink()
