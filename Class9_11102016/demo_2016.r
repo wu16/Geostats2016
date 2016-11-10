@@ -41,6 +41,7 @@ krig1_block5
 #new grid
 data.grid2 <- expand.grid(x=seq(7.75,9.25,0.5),y=seq(9.75,11.25,0.5))
 coordinates(data.grid2) <- ~x+y
+gridded(data.grid2) <- T  #added in class
 krig_grid2 <- krige(pH ~ 1, all, data.grid2, model=var1.fit1,
 block=c(2,2),set=list(nblockdiscr=4))
 
