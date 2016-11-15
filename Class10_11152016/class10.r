@@ -53,15 +53,6 @@ data(meuse.grid)
 coordinates(meuse.grid) <- ~x+y
 cok.maps <- predict(vm.fit, meuse.grid)
 
-#different range leads to negative cokriging variances
-vm2.fit <- vm.fit
-vm2.fit$model[[3]]$range = c(0, 900)
-#vm2.fit
-#predict(vm2.fit, meuse.grid)
-
-vm2.fit$set <- list(nocheck = 1)
-x <- predict(vm2.fit, meuse.grid)
-
 #stratified kriging
 
 library(gstat)
@@ -73,8 +64,6 @@ coordinates(meuse.grid) <- ~x+y
 gridded(meuse.grid) <- TRUE
 
 meuse$part.a <- idw(part.a ~ 1, meuse.grid, meuse, nmax=1)$var1.pred
-
-#meuse$part.a <- meuse.grid$part.a[overlay(meuse.grid,meuse)]
 
 var1 <- variogram(log(zinc) ~ 1, meuse[meuse$part.a==0,])
 plot(var1)
