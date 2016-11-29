@@ -32,6 +32,7 @@ library(CARBayesdata)
 library(sp)
 library(spdep)
 data(pricedata)
+data(GGHB_IG)
 
 missing.IG <- setdiff(rownames(GGHB.IG@data), pricedata$IG)
 missing.IG.row <- which(missing.IG==rownames(GGHB.IG@data))
